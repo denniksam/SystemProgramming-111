@@ -44,7 +44,7 @@
             </DockPanel>
 
             <Label Margin="10 10 10 0">
-                ч.3. Проблема: исключение (изменения из другого потока)
+                ч.3. Решено - кнопки работают
             </Label>
             <DockPanel Margin="10 0 10 20">
                 <Button Content="Start" DockPanel.Dock="Left"
@@ -54,6 +54,19 @@
                         Margin="10 0 0 0" Padding="7 4"
                         x:Name="ButtonStop3" Click="ButtonStop3_Click"/>
                 <ProgressBar x:Name="progressBar3"/>
+            </DockPanel>
+
+            <Label Margin="10 10 10 0">
+                ч.4. Передача данных в потоки 
+            </Label>
+            <DockPanel Margin="10 0 10 20">
+                <Button Content="Start" DockPanel.Dock="Left"
+                        Margin="0 0 10 0" Padding="7 4"
+                        x:Name="ButtonStart4" Click="ButtonStart4_Click"/>
+                <Button Content="Stop" DockPanel.Dock="Right"
+                        Margin="10 0 0 0" Padding="7 4"
+                        x:Name="ButtonStop4" Click="ButtonStop4_Click"/>
+                <ProgressBar x:Name="progressBar4"/>
             </DockPanel>
         </StackPanel>
     </Grid>
