@@ -43,6 +43,19 @@
                 <ProgressBar x:Name="progressBar2"/>
             </DockPanel>
 
+            <Label Margin="10 10 10 0">
+                ч.3. Оптимальное решение
+            </Label>
+            <DockPanel Margin="10 0 10 20">
+                <Button Content="Start" DockPanel.Dock="Left"
+                        Margin="0 0 10 0" Padding="7 4"
+                        x:Name="ButtonStart3" Click="ButtonStart3_Click"/>
+                <Button Content="Stop" DockPanel.Dock="Right"
+                        Margin="10 0 0 0" Padding="7 4"
+                        x:Name="ButtonStop3" Click="ButtonStop3_Click"/>
+                <ProgressBar x:Name="progressBar3"/>
+            </DockPanel>
+
         </StackPanel>
     </Grid>
 </Window>
