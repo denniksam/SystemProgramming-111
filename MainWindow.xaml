@@ -17,5 +17,11 @@
                 Margin="10" Padding="10 5"
                 HorizontalContentAlignment="Left"
                 FontSize="18"/>
+        <Button x:Name="Multi" 
+                Click="Multi_Click"
+                Content="2. Синхронизация"
+                Margin="10" Padding="10 5"
+                HorizontalContentAlignment="Left"
+                FontSize="18"/>
     </StackPanel>
 </Window>
