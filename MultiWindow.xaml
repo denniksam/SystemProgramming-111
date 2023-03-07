@@ -56,6 +56,32 @@
                 <ProgressBar x:Name="progressBar3"/>
             </DockPanel>
 
+            <Label Margin="10 10 10 0">
+                ч.4. Д.З.
+            </Label>
+            <DockPanel Margin="10 0 10 20">
+                <Button Content="Start" DockPanel.Dock="Left"
+                        Margin="0 0 10 0" Padding="7 4"
+                        x:Name="ButtonStart4"/>
+                <Button Content="Stop" DockPanel.Dock="Right"
+                        Margin="10 0 0 0" Padding="7 4"
+                        x:Name="ButtonStop4"/>
+                <ProgressBar x:Name="progressBar4"/>
+            </DockPanel>
+
+            <Label Margin="10 10 10 0">
+                ч.5. Пул потоков
+            </Label>
+            <DockPanel Margin="10 0 10 20">
+                <Button Content="Start" DockPanel.Dock="Left"
+                        Margin="0 0 10 0" Padding="7 4"
+                        x:Name="ButtonStart5" Click="ButtonStart5_Click"/>
+                <Button Content="Stop" DockPanel.Dock="Right"
+                        Margin="10 0 0 0" Padding="7 4"
+                        x:Name="ButtonStop5" Click="ButtonStop5_Click"/>
+                <ProgressBar x:Name="progressBar5"/>
+            </DockPanel>
+
         </StackPanel>
     </Grid>
 </Window>

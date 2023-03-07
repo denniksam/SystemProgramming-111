@@ -113,7 +113,6 @@ namespace SystemProgramming_111
         }
         #endregion
 
-
         #region variant 3
         private void ButtonStart3_Click(object sender, RoutedEventArgs e)
         {
@@ -160,6 +159,66 @@ namespace SystemProgramming_111
                 ConsoleBlock.Text += month + " " + percent + " " + val + "\n";
                 progressBar3.Value += 100.0 / 12;
             });
+        }
+        #endregion
+
+        #region Thread Pool
+        CancellationTokenSource cts5;
+        private void ButtonStart5_Click(object sender, RoutedEventArgs e)
+        {
+            cts5 = new CancellationTokenSource();
+            for(int i = 0; i < 25; i++)
+            {
+                ThreadPool                     // Пул потоков (new не надо)
+                    .QueueUserWorkItem(        // добавление новой задачи
+                    plusPercent5,              // (она сразу ставится на исполнение - 
+                    new ThreadData3            //  отдельный Start() не нужен)
+                    {                          // Дополнительный аргумент также
+                        Month = i,             // может быть только один и 
+                        Token = cts5.Token     // передается в поток вторым параметром
+                    });                        // при добавлении
+            }                                  // 
+        }
+        private void ButtonStop5_Click(object sender, RoutedEventArgs e)
+        {
+            cts5?.Cancel();
+        }
+        private double sum5;
+        private readonly object locker5 = new(); 
+        private void plusPercent5(object? data)
+        {
+            var threadData = data as ThreadData3;
+            if (threadData is null) return;
+            double val;
+            try
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    Thread.Sleep(random.Next(250, 350));
+                    // место для возможной отмены потока
+                    threadData.Token.ThrowIfCancellationRequested();
+                }
+                double percent = 10 + threadData.Month;
+                double factor = 1 + percent / 100;
+                lock (locker5)
+                {                                      // внутри блока
+                    val = sum5;                        // остается часть рассчетов
+                    val *= factor;                     // которую нельзя более
+                    sum5 = val;                        // разделять
+                }
+                Dispatcher.Invoke(() =>
+                {
+                    ConsoleBlock.Text += threadData.Month + " " + percent + " " + val + "\n";
+                    progressBar5.Value += 100.0 / 25;
+                });
+            }
+            catch(OperationCanceledException)
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    ConsoleBlock.Text += threadData.Month + " Cancelled \n";
+                });
+            }
         }
         #endregion
     }

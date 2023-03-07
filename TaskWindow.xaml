@@ -1,0 +1,35 @@
+﻿<Window x:Class="SystemProgramming_111.TaskWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SystemProgramming_111"
+        mc:Ignorable="d"
+        Title="TaskWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Border Margin="1" BorderBrush="Salmon" BorderThickness="1" Grid.Column="1">
+            <TextBlock x:Name="ConsoleBlock" Margin="5"/>
+        </Border>
+
+        <StackPanel Orientation="Vertical">
+            <Label Margin="10 10 10 0">
+                ч.1. Старт задач
+            </Label>
+            <DockPanel Margin="10 0 10 20">
+                <Button Content="Start" DockPanel.Dock="Left"
+                        Margin="0 0 10 0" Padding="7 4"
+                        x:Name="ButtonStart1" Click="ButtonStart1_Click"/>
+                <Button Content="Stop" DockPanel.Dock="Right"
+                        Margin="10 0 0 0" Padding="7 4"
+                        x:Name="ButtonStop1" Click="ButtonStop1_Click"/>
+                <ProgressBar x:Name="progressBar1"/>
+            </DockPanel>
+
+        </StackPanel>
+    </Grid>
+</Window>

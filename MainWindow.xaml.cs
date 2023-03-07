@@ -38,5 +38,12 @@ namespace SystemProgramming_111
             new MultiWindow().ShowDialog();
             this.Show();
         }
+
+        private void TaskButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            new TaskWindow().ShowDialog();
+            this.Show();
+        }
     }
 }
