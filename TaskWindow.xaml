@@ -30,6 +30,43 @@
                 <ProgressBar x:Name="progressBar1"/>
             </DockPanel>
 
+            <Label Margin="10 10 10 0">
+                ч.2. О задачах детальнее
+            </Label>
+            <DockPanel Margin="10 0 10 20">
+                <Button Content="Demo 1" DockPanel.Dock="Left" Padding="7 4"
+                        x:Name="ButtonStart2" Click="ButtonStart2_Click"/>
+                <Button Content="Demo 2" DockPanel.Dock="Left"
+                        Margin="10 0 0 0" Padding="7 4"
+                        x:Name="ButtonStop2" Click="ButtonStop2_Click"/>
+                <Button Content="Demo 3" DockPanel.Dock="Left"
+                        Margin="10 0 0 0" Padding="7 4"
+                        x:Name="ButtonDemo3" Click="ButtonDemo3_Click"/>
+                <Button Content="Demo 4" DockPanel.Dock="Left"
+                        Margin="10 0 0 0" Padding="7 4"
+                        x:Name="ButtonDemo4" Click="ButtonDemo4_Click"/>
+            </DockPanel>
+
+            <Label Margin="10 10 10 0">
+                ч.3. Возврат данных из задач
+            </Label>
+            <DockPanel Margin="10 0 10 20">
+                <Button Content="Demo 1" DockPanel.Dock="Left" Padding="7 4"
+                        Background="Tomato" ToolTip="Зависает при нажатии"
+                        x:Name="ButtonDemo1_2" Click="ButtonDemo1_2_Click"/>
+                <Button Content="Demo 2" DockPanel.Dock="Left"
+                        Margin="10 0 0 0" Padding="7 4"
+                        x:Name="ButtonDemo2_2" Click="ButtonDemo2_2_Click"/>
+                <Button Content="Demo 3" DockPanel.Dock="Left"
+                        Margin="10 0 0 0" Padding="7 4"
+                        x:Name="ButtonDemo3_2" Click="ButtonDemo3_2_Click"/>
+                <Button Content="Demo 4" DockPanel.Dock="Left"
+                        Margin="10 0 0 0" Padding="7 4"
+                        x:Name="ButtonDemo4_2" Click="ButtonDemo4_2_Click" />
+                <Button Content="Demo 5" DockPanel.Dock="Left"
+                        Margin="10 0 0 0" Padding="7 4"
+                        x:Name="ButtonDemo5_2" Click="ButtonDemo5_2_Click" />
+            </DockPanel>
         </StackPanel>
     </Grid>
 </Window>
