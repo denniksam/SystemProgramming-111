@@ -29,5 +29,11 @@
                 Margin="10" Padding="10 5"
                 HorizontalContentAlignment="Left"
                 FontSize="18"/>
+        <Button x:Name="SynchroButton" 
+                Click="SynchroButton_Click"
+                Content="4. Объекты синхронизации"
+                Margin="10" Padding="10 5"
+                HorizontalContentAlignment="Left"
+                FontSize="18"/>
     </StackPanel>
 </Window>
