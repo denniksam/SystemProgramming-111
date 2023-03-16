@@ -35,5 +35,11 @@
                 Margin="10" Padding="10 5"
                 HorizontalContentAlignment="Left"
                 FontSize="18"/>
+        <Button x:Name="ProcessButton" 
+                Click="ProcessButton_Click"
+                Content="5. Процессы"
+                Margin="10" Padding="10 5"
+                HorizontalContentAlignment="Left"
+                FontSize="18"/>
     </StackPanel>
 </Window>
