@@ -20,6 +20,19 @@
                 <Button Content="Показать" x:Name="ShowProcesses"
                         Margin="5" Padding="7 2 7 4"
                         Click="ShowProcesses_Click"/>
+
+                <Label x:Name="timeElapsed" Margin="20 0 0 0"/>
+            </StackPanel>
+
+            <Label Content="Управление процессами"/>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Запустить блокнот" x:Name="StartNotepad"
+                        Margin="5" Padding="7 2 7 4"
+                        Click="StartNotepad_Click"/>
+                <Button Content="Закрыть блокнот" x:Name="StopNotepad"
+                        Margin="5" Padding="7 2 7 4"
+                        IsEnabled="False"
+                        Click="StopNotepad_Click"/>
             </StackPanel>
         </StackPanel>
     </Grid>

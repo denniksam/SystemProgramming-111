@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -30,53 +31,97 @@ namespace SystemProgramming_111
 
         private void ShowProcesses_Click(object sender, RoutedEventArgs e)
         {
+            ShowProcesses.IsEnabled = false;
+            new Thread(UpdateProcesses).Start();
+        }
+        private void UpdateProcesses()
+        {
+            Stopwatch sw = Stopwatch.StartNew();
             Process[] processes = Process.GetProcesses();
             foreach (Process process in processes)
             {
                 List<Process> list;
-                if(processDict.ContainsKey(process.ProcessName))
+                if(processDict.ContainsKey(process.ProcessName))  // процесс с этим именем уже в словаре
                 {
-                    list = processDict[process.ProcessName];
-                    // если нет исключения, то процесс с этим именем уже в словаре
+                    list = processDict[process.ProcessName];                    
                     list.Add(process);
                 }
-                else   // исключение - если нет такого имени в словаре
+                else   // нет такого имени в словаре 
                 {
                     list = new List<Process>();
                     list.Add(process);
                     processDict[process.ProcessName] = list;
                 }
             }
+            sw.Stop();
 
-            foreach(var pair in processDict)
+            Dispatcher.Invoke(() =>
             {
-                TreeViewItem node = new() { Header = pair.Key };
-
-                foreach(Process process in pair.Value)
+                timeElapsed.Content = sw.ElapsedTicks + " tck";
+                treeView.Items.Clear();
+                foreach (var pair in processDict)
                 {
-                    TreeViewItem subnode = new() { Header = process.Id };
-                    node.Items.Add(subnode);
+                    TreeViewItem node = new() { Header = pair.Key };
+
+                    foreach (Process process in pair.Value)
+                    {
+                        TreeViewItem subnode = new() { Header = process.Id };
+                        node.Items.Add(subnode);
+                    }
+
+                    treeView.Items.Add(node);
                 }
 
-                treeView.Items.Add(node);
-            }
-            /*
-             foreach (Process process in processes)
+                ShowProcesses.IsEnabled = true;
+            });
+        }
+        private Process notepadProcess;
+        private void StartNotepad_Click(object sender, RoutedEventArgs e)
+        {
+            notepadProcess = Process.Start("C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+                "-url itstep.org");
+            // notepadProcess = Process.Start("notepad.exe", 
+            //     @"C:\Users\_dns_\source\repos\SystemProgramming-111\Notes\Processes.txt");
+            
+            if(notepadProcess is not null)
             {
-                TreeViewItem node = new TreeViewItem();
-                node.Header = process.ProcessName;
-                node.Tag = process;
+                StopNotepad.IsEnabled = true;
+                StartNotepad.IsEnabled = false;
+            }
+        }
 
-                TreeViewItem subnode = new TreeViewItem();
-                subnode.Header = process.Id;
+        private void StopNotepad_Click(object sender, RoutedEventArgs e)
+        {
+            if (notepadProcess is not null)
+            {
+                notepadProcess.CloseMainWindow();
+                notepadProcess.Kill();
+                notepadProcess.WaitForExit();
 
-                node.Items.Add(subnode);
+                StopNotepad.IsEnabled = false;
+                StartNotepad.IsEnabled = true;
 
-                treeView.Items.Add(node);
-            }*/
+                notepadProcess = null!;
+            }
         }
     }
 }
+/* Д.З. Процессы.
+ * Запуск блокнота: Добавить кнопку выбора файла, при запуске блокнота
+ *  передавать ему выбранный файл.
+ * Запуск браузера: добавить поле ввода URL, запускать браузер на данной странице 
+ */
+/* О проверках и исключениях:
+* проверить наличие ключа в словаре можно двумя путями
+* а) if(processDict.ContainsKey(...))
+* б) try {processDict[...]} catch{...}
+* Проверка времени их работы показала, что 
+* а) 94 ns 
+* б) 3 300 000 ns
+* Вывод: использовать исключения в только самых необходимых случаях
+* Избегать использования в циклах
+*/
+
 /*
  * svchost
  *  - svchost 14
