@@ -66,5 +66,12 @@ namespace SystemProgramming_111
             new DllWindow().ShowDialog();
             this.Show();
         }
+
+        private void HookButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            new HookWindow().ShowDialog();
+            this.Show();
+        }
     }
 }

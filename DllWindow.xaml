@@ -37,6 +37,21 @@
                         Margin="10" Padding="7 4 7 2" FontSize="16"
                         Click="Beep1_Click"/>
             </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="SayHelloButton" Content="Thread"
+                        Margin="10" Padding="7 4 7 2" FontSize="16"
+                        Click="SayHelloButton_Click"/>
+                <Label x:Name="SayHelloLabel"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="StartTimer" Content="Start"
+                        Margin="10" Padding="7 4 7 2" FontSize="16"
+                        Click="StartTimer_Click"/>
+                <Label x:Name="TicksLabel" Width="75"/>
+                <Button x:Name="StopTimer" Content="Stop" IsEnabled="False"
+                        Margin="10" Padding="7 4 7 2" FontSize="16"
+                        Click="StopTimer_Click"/>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Window>

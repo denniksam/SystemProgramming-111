@@ -47,5 +47,11 @@
                 Margin="10" Padding="10 5"
                 HorizontalContentAlignment="Left"
                 FontSize="18"/>
+        <Button x:Name="HookButton" 
+                Click="HookButton_Click"
+                Content="7. Системные хуки"
+                Margin="10" Padding="10 5"
+                HorizontalContentAlignment="Left"
+                FontSize="18"/>
     </StackPanel>
 </Window>
