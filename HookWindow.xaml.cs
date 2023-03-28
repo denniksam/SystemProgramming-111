@@ -50,19 +50,45 @@ namespace SystemProgramming_111
 
         #endregion
 
-        private IntPtr kbHook;   // сохраненный адрес старого обработчика
+        private IntPtr   kbHook;   // сохраненный адрес старого обработчика
+        private HookProc kbHookProc;  // объект, который будет зафиксирован от перемещений
+        private GCHandle kbHookHandle;  // дескриптор зафисиксированного объекта
 
+        [StructLayout(LayoutKind.Sequential)]
+        struct KBDLLHOOKSTRUCT  // структура, по которой передаются данные от kbd - клавиатуры
+        {
+            public int vkCode;
+            public int scanCode;
+            public int flags;
+            public int time;
+            public int dwExtraInfo;
+        }
         private IntPtr kbHookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
             if(nCode >= 0 && wParam == (IntPtr) WM_KEYDOWN)
             {
-                int vkCode =             // Маршализация - передача данных (Int32)
-                    Marshal              // из адреса (lParam) в управляемый код
-                    .ReadInt32(lParam);  // (int vkCode)
+                int vkCode =               // Маршализация - передача данных (Int32)
+                    Marshal                // из адреса (lParam) в управляемый код
+                    .ReadInt32(lParam);    // (int vkCode)
 
-                HookLogs.Text += vkCode.ToString();
+                KBDLLHOOKSTRUCT keyData =  // Полная версия - маршализация структуры
+                    Marshal                // Краткая форма ReadInt32(lParam) возможна
+                    .PtrToStructure        // потому, что vkCode идет первым в структуре
+                    <KBDLLHOOKSTRUCT>      // То есть считать 32 бита от начала структуры
+                    (lParam);              // это и есть считать vkCode
+
+                Key key = KeyInterop.KeyFromVirtualKey(vkCode);
+                HookLogs.Text += key + " ";
+                if(key == Key.LWin || key == Key.Space)
+                {
+                    HookLogs.Text += "(block)";
+                    return (IntPtr)1;  // возврат "1" свидетельствует об окончании обработки - 
+                    // следующие хуки не запускаются. Как результат нажатие кнопки игнорируется
+                    // причем во всех окнах
+                }                
             }
-            return CallNextHookEx(kbHook, nCode, wParam, lParam);
+
+            return CallNextHookEx(kbHook, nCode, wParam, lParam);  // переход к следующему хуку
         }
 
 
@@ -80,9 +106,13 @@ namespace SystemProgramming_111
                 HookLogs.Text += "Error in MainModule\n";
                 return;
             }
+
+            kbHookProc = new HookProc(kbHookCallback);  // "отделяем" метод от окна в новый объект
+            kbHookHandle = GCHandle.Alloc(kbHookProc);  // закрепляем - GC не будет перемещать объект
+
             kbHook = SetWindowsHookEx(     // Принцип выталкивания - новый адрес
                 WH_KEYBOARD_LL,            // устанавливается, а старый возвращается
-                kbHookCallback,            // и сохраняется в kbHook
+                kbHookProc,                // и сохраняется в kbHook
                 GetModuleHandle(thisModule.ModuleName),
                 0);
             HookLogs.Text += "Hook Activated\n";
@@ -91,6 +121,8 @@ namespace SystemProgramming_111
         private void StopKbHook_Click(object sender, RoutedEventArgs e)
         {
             UnhookWindowsHookEx(kbHook);
+            kbHookHandle.Free();
+            kbHookProc = null!;
             HookLogs.Text += "Hook Deactivated\n";
         }
     }

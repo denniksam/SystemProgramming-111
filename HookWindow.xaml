@@ -11,6 +11,6 @@
             <Button x:Name="StartKbHook" Click="StartKbHook_Click" Margin="10" Content="Start Keyboard Hook"/>
             <Button x:Name="StopKbHook"  Click="StopKbHook_Click"  Margin="10" Content="Stop Keyboard Hook"/>
         </StackPanel>
-        <TextBlock x:Name="HookLogs"/>
+        <TextBlock x:Name="HookLogs" TextWrapping="Wrap"/>
     </StackPanel>
 </Window>
